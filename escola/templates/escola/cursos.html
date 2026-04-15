@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Cursos da Escola</title>
+</head>
+<body>
+    <h1>Lista de Cursos</h1>
+
+    {% for curso in cursos %}
+        <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 20px;">
+            <h2>Curso: {{ curso.nome }}</h2>
+            
+            {% if curso.imagem %}
+                <img src="{{ curso.imagem.url }}" alt="{{ curso.nome }}" width="200">
+            {% endif %}
+
+            <p><strong>Professor:</strong> {{ curso.professor.nome }} ({{ curso.professor.email }})</p>
+
+            <h3>Alunos Inscritos:</h3>
+            <ul>
+                {% for aluno in curso.alunos.all %}
+                    <li>{{ aluno.nome }} (Nº {{ aluno.numero }})</li>
+                {% empty %}
+                    <li>Não há alunos inscritos neste curso.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+
+</body>
+</html>
