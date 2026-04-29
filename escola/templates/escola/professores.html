@@ -1,0 +1,25 @@
+{% extends "escola/base.html" %}
+
+{% block content %}
+<h2>Professores</h2>
+<section>
+    {% for professor in professores %}
+    <article>
+        <header>
+            <h3>{{ professor.nome }}</h3>
+            <p><strong>Email:</strong> {{ professor.email }}</p>
+        </header>
+        <section>
+            <h4>Cursos que Leciona</h4>
+            <div class="badge-container">
+                {% for curso in professor.cursos.all %}
+                    <span class="badge">{{ curso.nome }}</span>
+                {% empty %}
+                    <p>Este professor não leciona cursos atualmente.</p>
+                {% endfor %}
+            </div>
+        </section>
+    </article>
+    {% endfor %}
+</section>
+{% endblock %}

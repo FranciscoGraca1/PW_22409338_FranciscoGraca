@@ -1,8 +1,10 @@
 from django.urls import path
-from . import views  # Isto importa o ficheiro views.py que está na mesma pasta
+from . import views
 
 app_name = 'escola'
 
 urlpatterns = [
     path('cursos/', views.cursos_view, name='cursos'),
+    path('alunos/', views.alunos_view, name='alunos'),
+    path('professores/', views.professores_view, name='professores'),
 ]
