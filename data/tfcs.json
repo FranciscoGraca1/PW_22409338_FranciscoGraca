@@ -1,0 +1,16 @@
+[
+    {
+        "titulo": "Sistema de Gestão de Portfólios",
+        "autor": "Francisco Graça",
+        "ano": 2026,
+        "resumo": "Uma aplicação Django para gerir percursos académicos.",
+        "link": "https://github.com/exemplo/projeto1"
+    },
+    {
+        "titulo": "Análise de Dados com Python",
+        "autor": "Francisco Graça",
+        "ano": 2025,
+        "resumo": "Estudo sobre bibliotecas de processamento de dados.",
+        "link": "https://github.com/exemplo/projeto2"
+    }
+]

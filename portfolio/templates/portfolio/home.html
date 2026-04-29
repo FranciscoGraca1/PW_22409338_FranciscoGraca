@@ -1,0 +1,58 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Secção Hero: Apresentação -->
+<section class="hero-section">
+    <div class="container">
+        <h1>Bem-vindo ao meu Portfólio</h1>
+        <p class="lead">Estudante de Engenharia Informática na Universidade Lusófona.</p>
+    </div>
+</section>
+
+<div class="container mt-5">
+    <!-- Secção: Tecnologias -->
+    <h2 class="mb-4">Tecnologias & Competências</h2>
+    <div class="row mb-5">
+        {% for tech in tecnologias %}
+        <div class="col-md-2 col-sm-4 text-center mb-3">
+            <div class="tech-card p-3 shadow-sm">
+                {% if tech.logo %}
+                    <img src="{{ tech.logo.url }}" alt="{{ tech.nome }}" class="img-fluid mb-2" style="max-height: 50px;">
+                {% endif %}
+                <h6>{{ tech.nome }}</h6>
+                <div class="progress" style="height: 5px;">
+                    <div class="progress-bar" role="progressbar" style="width: {{ tech.preferencia|add:'20' }}%;"></div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Secção: Projetos em Destaque -->
+    <h2 class="mb-4">Projetos em Destaque</h2>
+    <div class="row">
+        {% for projeto in projetos %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow">
+                {% if projeto.imagem %}
+                    <img src="{{ projeto.imagem.url }}" class="card-img-top" alt="{{ projeto.titulo }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ projeto.titulo }}</h5>
+                    <p class="card-text">{{ projeto.descricao|truncatewords:20 }}</p>
+                    <div class="mb-3">
+                        {% for tech in projeto.tecnologias.all %}
+                            <span class="badge bg-primary">{{ tech.acronimo }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <a href="{{ projeto.github_link }}" class="btn btn-outline-dark btn-sm">Ver no GitHub</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
