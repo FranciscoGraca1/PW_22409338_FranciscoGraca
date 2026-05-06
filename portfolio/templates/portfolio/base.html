@@ -2,45 +2,40 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfólio - Francisco Graça</title>
-    <!-- Bootstrap para o design bonito -->
+    <title>Portfólio Académico</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .hero-section {
-            background: #f8f9fa;
-            padding: 60px 0;
-            border-bottom: 1px solid #dee2e6;
-            text-align: center;
-        }
-        .tech-card:hover {
-            transform: translateY(-5px);
-            transition: 0.3s;
-        }
-        .card-img-top {
-            height: 200px;
-            object-fit: cover;
-        }
+        .nav-link:hover { color: #007bff !important; transform: scale(1.05); transition: 0.2s; }
+        .card { border: none; transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        footer { background: #f8f9fa; margin-top: 50px; }
     </style>
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
         <div class="container">
-            <a class="navbar-brand" href="#">Francisco Graça</a>
-            <div class="navbar-nav">
-                <a class="nav-link" href="{% url 'portfolio:home' %}">Home</a>
-                <!-- Link para o Making Of (importante para a nota) -->
-                <a class="nav-link" href="#">Making Of</a>
+            <a class="navbar-brand fw-bold" href="{% url 'portfolio:home' %}">Francisco Graça</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'portfolio:home' %}">Sobre</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'portfolio:licenciatura' %}">Licenciatura</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'portfolio:ucs' %}">UCs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'portfolio:projetos' %}">Projetos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'portfolio:tecnologias' %}">Tecnologias</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'portfolio:tfc' %}">TFCs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'portfolio:makingof' %}">Making Of</a></li>
+                </ul>
             </div>
         </div>
     </nav>
 
-    <main>
+    <div class="container py-5 mt-4 bg-white shadow-sm rounded min-vh-100">
         {% block content %}{% endblock %}
-    </main>
+    </div>
 
-    <footer class="text-center py-4 mt-5 border-top">
-        <p>&copy; 2026 Francisco Graça - Engenharia Informática ULHT</p>
+    <footer class="text-center py-4 text-muted border-top">
+        <small>&copy; 2026 Portfólio Francisco Graça | Engenharia Informática ULHT</small>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

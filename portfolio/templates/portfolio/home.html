@@ -1,58 +1,19 @@
 {% extends 'portfolio/base.html' %}
-{% load static %}
-
 {% block content %}
-<!-- Secção Hero: Apresentação -->
-<section class="hero-section">
-    <div class="container">
-        <h1>Bem-vindo ao meu Portfólio</h1>
-        <p class="lead">Estudante de Engenharia Informática na Universidade Lusófona.</p>
+<div class="row align-items-center">
+    <div class="col-md-4 text-center">
+        <!-- Substitua pelo caminho real da sua foto -->
+        <img src="https://via.placeholder.com/250" class="rounded-circle img-thumbnail shadow" alt="Foto Francisco">
     </div>
-</section>
-
-<div class="container mt-5">
-    <!-- Secção: Tecnologias -->
-    <h2 class="mb-4">Tecnologias & Competências</h2>
-    <div class="row mb-5">
-        {% for tech in tecnologias %}
-        <div class="col-md-2 col-sm-4 text-center mb-3">
-            <div class="tech-card p-3 shadow-sm">
-                {% if tech.logo %}
-                    <img src="{{ tech.logo.url }}" alt="{{ tech.nome }}" class="img-fluid mb-2" style="max-height: 50px;">
-                {% endif %}
-                <h6>{{ tech.nome }}</h6>
-                <div class="progress" style="height: 5px;">
-                    <div class="progress-bar" role="progressbar" style="width: {{ tech.preferencia|add:'20' }}%;"></div>
-                </div>
-            </div>
+    <div class="col-md-8">
+        <h1 class="display-4">Olá, eu sou o Francisco</h1>
+        <p class="lead text-secondary">Estudante de Engenharia Informática na Universidade Lusófona.</p>
+        <hr>
+        <p>Desenvolvo este portfólio para reunir o meu percurso académico e os projetos em que tenho trabalhado. O meu objetivo é aplicar os conhecimentos de desenvolvimento web, bases de dados e engenharia de software em soluções reais.</p>
+        <div class="mt-4">
+            <a href="#" class="btn btn-primary">Download CV</a>
+            <a href="https://github.com/FranciscoGraca1" class="btn btn-dark">GitHub</a>
         </div>
-        {% endfor %}
-    </div>
-
-    <!-- Secção: Projetos em Destaque -->
-    <h2 class="mb-4">Projetos em Destaque</h2>
-    <div class="row">
-        {% for projeto in projetos %}
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow">
-                {% if projeto.imagem %}
-                    <img src="{{ projeto.imagem.url }}" class="card-img-top" alt="{{ projeto.titulo }}">
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ projeto.titulo }}</h5>
-                    <p class="card-text">{{ projeto.descricao|truncatewords:20 }}</p>
-                    <div class="mb-3">
-                        {% for tech in projeto.tecnologias.all %}
-                            <span class="badge bg-primary">{{ tech.acronimo }}</span>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="card-footer bg-transparent border-0">
-                    <a href="{{ projeto.github_link }}" class="btn btn-outline-dark btn-sm">Ver no GitHub</a>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
     </div>
 </div>
 {% endblock %}

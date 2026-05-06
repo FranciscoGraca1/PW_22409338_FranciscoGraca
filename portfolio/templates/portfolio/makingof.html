@@ -1,0 +1,28 @@
+{% extends 'portfolio/base.html' %}
+{% block content %}
+<h2 class="mb-4 border-bottom pb-2">Making Of - Documentação do Projeto</h2>
+<div class="row">
+    <div class="col-lg-8">
+        <h3>1. Modelação de Dados</h3>
+        <p>O processo de modelação começou no papel, onde foram definidas as entidades centrais (Pessoa, Projeto, Tecnologia, UC). A relação Many-to-Many entre Projetos e Tecnologias foi crucial para permitir a reutilização de tags de stack tecnológica.</p>
+        
+        <!-- Exemplo de como mostrar as fotos do seu caderno -->
+        <div class="card mb-4 bg-light p-3 text-center">
+            <img src="/media/makingof/caderno_der.jpg" class="img-fluid rounded mb-2" alt="Foto do Caderno">
+            <span class="text-muted small">Figura 1: Esboço inicial do Diagrama Entidade-Relação.</span>
+        </div>
+
+        <h3>2. Dificuldades Técnicas</h3>
+        <ul>
+            <li><strong>Importação de Dados:</strong> O mapeamento dos campos da API da Lusófona para os campos do modelo Django exigiu ajustes no script para tratar caracteres especiais.</li>
+            <li><strong>Roteamento:</strong> Corrigido o erro de 404 ao aceder ao URL sem a barra final através da configuração correta no <code>urls.py</code> do projeto.</li>
+        </ul>
+    </div>
+    <div class="col-lg-4">
+        <div class="p-3 bg-light rounded border">
+            <h5>Metodologia</h5>
+            <p class="small text-muted">Implementação incremental: primeiro os modelos, seguidos do admin para teste de dados, e finalmente as views e templates.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

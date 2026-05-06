@@ -1,0 +1,28 @@
+{% extends 'portfolio/base.html' %}
+{% block content %}
+<h2 class="mb-4 border-bottom pb-2">Propostas e Exemplos de TFC</h2>
+<div class="table-responsive">
+    <table class="table table-hover border">
+        <thead class="table-dark">
+            <tr>
+                <th>Título</th>
+                <th>Ano</th>
+                <th>Autor</th>
+                <th>Resumo</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tfc in tfcs %}
+            <tr>
+                <td class="fw-bold">{{ tfc.titulo }}</td>
+                <td>{{ tfc.ano }}</td>
+                <td>{{ tfc.autor }}</td>
+                <td class="small">{{ tfc.resumo|truncatewords:15 }}</td>
+                <td><a href="{{ tfc.link_relatorio }}" class="btn btn-sm btn-outline-primary">Relatório</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
