@@ -1,0 +1,56 @@
+{% extends 'portfolio/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+    <h2>Os Meus Projetos</h2>
+    <!-- Botão para criar novo projeto -->
+    <a href="{% url 'portfolio:projeto_novo' %}" class="btn btn-success">+ Novo Projeto</a>
+</div>
+
+<div class="row">
+    {% for projeto in projetos %}
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <!-- Imagem do Projeto -->
+            {% if projeto.imagem %}
+                <img src="{{ projeto.imagem.url }}" class="card-img-top" alt="{{ projeto.titulo }}" style="height: 200px; object-fit: cover;">
+            {% else %}
+                <img src="https://via.placeholder.com/400x200?text=Sem+Imagem" class="card-img-top" alt="Sem imagem">
+            {% endif %}
+
+            <div class="card-body">
+                <h5 class="card-title fw-bold">{{ projeto.titulo }}</h5>
+                <p class="card-text text-secondary small">{{ projeto.descricao|truncatechars:100 }}</p>
+                
+                <!-- Listagem de Tecnologias (Many-to-Many) -->
+                <div class="mb-3">
+                    {% for tecnologia in projeto.tecnologias.all %}
+                        <span class="badge bg-info text-dark small">{{ tecnologia.nome }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="card-footer bg-transparent border-top-0 d-flex justify-content-between pb-3">
+                <!-- Links Externos -->
+                <div>
+                    {% if projeto.link_github %}
+                        <a href="{{ projeto.link_github }}" class="btn btn-sm btn-dark" target="_blank">GitHub</a>
+                    {% endif %}
+                </div>
+                
+                <!-- Botões de Gestão (CRUD) -->
+                <div class="btn-group">
+                    <a href="{% url 'portfolio:projeto_edita' projeto.id %}" class="btn btn-sm btn-outline-warning">Editar</a>
+                    <a href="{% url 'portfolio:projeto_apaga' projeto.id %}" class="btn btn-sm btn-outline-danger" 
+                       onclick="return confirm('Tem a certeza que deseja apagar este projeto?')">Apagar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5">
+        <p class="text-muted italic">Ainda não foram adicionados projetos ao portfólio.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

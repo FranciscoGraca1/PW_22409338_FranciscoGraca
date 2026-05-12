@@ -34,15 +34,20 @@ class UnidadeCurricular(models.Model):
     def __str__(self):
         return self.nome
 
+class TipoTecnologia(models.Model):
+    nome = models.CharField(max_length=50) # Frontend, Backend, etc.
+    def __str__(self): return self.nome
+
 class Tecnologia(models.Model):
     nome = models.CharField(max_length=50)
     acronimo = models.CharField(max_length=10, blank=True)
     logo = models.ImageField(upload_to='tecnologias/', blank=True)
     link_oficial = models.URLField(blank=True)
     preferencia = models.IntegerField(default=1)
+    descricao = models.TextField(blank=True) # Requisito 2.4.3
+    tipo = models.ForeignKey(TipoTecnologia, on_delete=models.CASCADE, related_name='tecnologias', null=True) # Requisito 2.4.3
 
-    def __str__(self):
-        return self.nome
+    def __str__(self): return self.nome
 
 class Projeto(models.Model):
     titulo = models.CharField(max_length=200)
@@ -65,3 +70,14 @@ class TFC(models.Model):
 
     def __str__(self):
         return self.titulo
+    
+class Competencia(models.Model):
+    nome = models.CharField(max_length=100)
+    descricao = models.TextField()
+    def __str__(self): return self.nome
+
+class Formacao(models.Model):
+    titulo = models.CharField(max_length=100)
+    instituicao = models.CharField(max_length=100)
+    ano = models.IntegerField()
+    def __str__(self): return self.titulo

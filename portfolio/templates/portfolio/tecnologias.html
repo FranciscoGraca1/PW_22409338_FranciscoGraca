@@ -1,0 +1,45 @@
+{% extends 'portfolio/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+    <h2>Tecnologias & Skills</h2>
+    <a href="{% url 'portfolio:tecnologia_novo' %}" class="btn btn-success btn-sm">+ Nova Tecnologia</a>
+</div>
+
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    {% for tecnologia in tecnologias %}
+    <div class="col">
+        <div class="card h-100 text-center shadow-sm p-3">
+            <!-- Ícone da Tecnologia -->
+            {% if tecnologia.imagem %}
+                <img src="{{ tecnologia.imagem.url }}" class="mx-auto mb-2" style="height: 60px; width: auto; object-fit: contain;" alt="{{ tecnologia.nome }}">
+            {% else %}
+                <div class="bg-light rounded mb-2 d-flex align-items-center justify-content-center" style="height: 60px;">
+                    <span class="text-muted small">Sem ícone</span>
+                </div>
+            {% endif %}
+            
+            <div class="card-body p-1">
+                <h6 class="card-title fw-bold mb-1">{{ tecnologia.nome }}</h6>
+                <p class="text-muted small mb-2">{{ tecnologia.descricao|truncatechars:50 }}</p>
+                
+                <!-- Nível de Preferência/Domínio -->
+                <div class="progress mb-3" style="height: 5px;">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: {{ tecnologia.preferencia }}%;"></div>
+                </div>
+            </div>
+
+            <!-- Botões CRUD -->
+            <div class="card-footer bg-transparent border-0 d-flex justify-content-center gap-2">
+                <a href="{% url 'portfolio:tecnologia_edita' tecnologia.id %}" class="btn btn-link btn-sm text-warning p-0">Editar</a>
+                <a href="{% url 'portfolio:tecnologia_apaga' tecnologia.id %}" class="btn btn-link btn-sm text-danger p-0" onclick="return confirm('Apagar {{ tecnologia.nome }}?')">Apagar</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5">
+        <p class="text-muted italic">Nenhuma tecnologia registada. Adiciona uma no botão acima ou no Admin.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

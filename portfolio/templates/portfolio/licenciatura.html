@@ -1,0 +1,11 @@
+{% extends 'portfolio/base.html' %}
+{% block content %}
+<div class="jumbotron">
+    <h1 class="display-4">{{ licenciatura.nome }} ({{ licenciatura.sigla }})</h1>
+    <p class="lead"><strong>Instituição:</strong> {{ licenciatura.instituicao }}</p>
+    <p><strong>Ano de Início:</strong> {{ licenciatura.ano_inicio }}</p>
+    <hr class="my-4">
+    <p>{{ licenciatura.descricao }}</p>
+    <a class="btn btn-primary" href="{{ licenciatura.link }}" target="_blank text">Mais Informações</a>
+</div>
+{% endblock %}
