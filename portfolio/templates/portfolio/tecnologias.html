@@ -1,45 +1,31 @@
-{% extends 'portfolio/base.html' %}
+{% extends 'portfolio/layout.html' %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
-    <h2>Tecnologias & Skills</h2>
-    <a href="{% url 'portfolio:tecnologia_novo' %}" class="btn btn-success btn-sm">+ Nova Tecnologia</a>
-</div>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Tecnologias</h1>
+        
+        {% if user.is_authenticated and user.groups.all.0.name == 'gestor-portfolio' %}
+            <a href="{% url 'portfolio:nova_tecnologia' %}" class="btn btn-primary">+ Nova Tecnologia</a>
+        {% endif %}
+    </div>
 
-<div class="row row-cols-1 row-cols-md-4 g-4">
-    {% for tecnologia in tecnologias %}
-    <div class="col">
-        <div class="card h-100 text-center shadow-sm p-3">
-            <!-- Ícone da Tecnologia -->
-            {% if tecnologia.imagem %}
-                <img src="{{ tecnologia.imagem.url }}" class="mx-auto mb-2" style="height: 60px; width: auto; object-fit: contain;" alt="{{ tecnologia.nome }}">
-            {% else %}
-                <div class="bg-light rounded mb-2 d-flex align-items-center justify-content-center" style="height: 60px;">
-                    <span class="text-muted small">Sem ícone</span>
+    <div class="list-group">
+        {% for tecnologia in tecnologias %}
+            <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="mb-1">{{ tecnologia.nome }}</h5>
+                    <p class="mb-1 small text-secondary">{{ tecnologia.descricao }}</p>
                 </div>
-            {% endif %}
-            
-            <div class="card-body p-1">
-                <h6 class="card-title fw-bold mb-1">{{ tecnologia.nome }}</h6>
-                <p class="text-muted small mb-2">{{ tecnologia.descricao|truncatechars:50 }}</p>
                 
-                <!-- Nível de Preferência/Domínio -->
-                <div class="progress mb-3" style="height: 5px;">
-                    <div class="progress-bar bg-primary" role="progressbar" style="width: {{ tecnologia.preferencia }}%;"></div>
-                </div>
+                {% if user.is_authenticated and user.groups.all.0.name == 'gestor-portfolio' %}
+                    <div>
+                        <a href="{% url 'portfolio:editar_tecnologia' tecnologia.id %}" class="btn btn-sm btn-outline-warning">Editar</a>
+                        <a href="{% url 'portfolio:apagar_tecnologia' tecnologia.id %}" class="btn btn-sm btn-outline-danger">Apagar</a>
+                    </div>
+                {% endif %}
             </div>
-
-            <!-- Botões CRUD -->
-            <div class="card-footer bg-transparent border-0 d-flex justify-content-center gap-2">
-                <a href="{% url 'portfolio:tecnologia_edita' tecnologia.id %}" class="btn btn-link btn-sm text-warning p-0">Editar</a>
-                <a href="{% url 'portfolio:tecnologia_apaga' tecnologia.id %}" class="btn btn-link btn-sm text-danger p-0" onclick="return confirm('Apagar {{ tecnologia.nome }}?')">Apagar</a>
-            </div>
-        </div>
+        {% endfor %}
     </div>
-    {% empty %}
-    <div class="col-12 text-center py-5">
-        <p class="text-muted italic">Nenhuma tecnologia registada. Adiciona uma no botão acima ou no Admin.</p>
-    </div>
-    {% endfor %}
 </div>
 {% endblock %}
