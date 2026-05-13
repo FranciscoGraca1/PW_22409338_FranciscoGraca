@@ -23,7 +23,7 @@ class Licenciatura(models.Model):
 
 class UnidadeCurricular(models.Model):
     nome = models.CharField(max_length=100)
-    sigla = models.CharField(max_length=20)
+    sigla = models.CharField(max_length=50)
     ano = models.IntegerField()
     semestre = models.IntegerField()
     ects = models.IntegerField()
