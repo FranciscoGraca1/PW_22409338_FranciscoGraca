@@ -1,0 +1,33 @@
+{% extends 'portfolio/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Competências</h1>
+        {% if user.is_authenticated and user.groups.all.0.name == 'gestor-portfolio' %}
+            <a href="{% url 'portfolio:nova_competencia' %}" class="btn btn-primary">+ Nova Competência</a>
+        {% endif %}
+    </div>
+
+    <div class="row">
+        {% for competencia in competencias %}
+            <div class="col-md-6 mb-3">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">{{ competencia.nome }}</h5>
+                        <p class="card-text text-muted">{{ competencia.descricao }}</p>
+                    </div>
+                    {% if user.is_authenticated and user.groups.all.0.name == 'gestor-portfolio' %}
+                        <div class="card-footer bg-transparent d-flex justify-content-end gap-2">
+                            <a href="{% url 'portfolio:editar_competencia' competencia.id %}" class="btn btn-sm btn-warning">Editar</a>
+                            <a href="{% url 'portfolio:apagar_competencia' competencia.id %}" class="btn btn-sm btn-danger">Apagar</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-center text-muted">Ainda não existem competências registadas.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

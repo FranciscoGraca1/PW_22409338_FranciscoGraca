@@ -33,15 +33,17 @@ def tfc_view(request):
     context = {'tfcs': TFC.objects.all()}
     return render(request, 'portfolio/tfc.html', context)
 
-# --- Páginas Estáticas ---
 def competencias_view(request):
-    return render(request, 'portfolio/competencias.html')
+    context = {'competencias': Competencia.objects.all()}
+    return render(request, 'portfolio/competencias.html', context)
 
 def formacoes_view(request):
-    return render(request, 'portfolio/formacoes.html')
+    context = {'formacoes': Formacao.objects.all()}
+    return render(request, 'portfolio/formacoes.html', context)
 
 def makingof_view(request):
     return render(request, 'portfolio/makingof.html')
+
 
 # --- CRUD Projetos ---
 def projeto_novo_view(request):
@@ -64,6 +66,7 @@ def projeto_apaga_view(request, projeto_id):
     projeto.delete()
     return redirect('portfolio:projetos')
 
+
 # --- CRUD Tecnologias ---
 def tecnologia_novo_view(request):
     form = TecnologiaForm(request.POST or None, request.FILES or None)
@@ -84,3 +87,47 @@ def tecnologia_apaga_view(request, tecnologia_id):
     tecnologia = get_object_or_404(Tecnologia, id=tecnologia_id)
     tecnologia.delete()
     return redirect('portfolio:tecnologias')
+
+
+# --- CRUD Competências ---
+def competencia_novo_view(request):
+    form = CompetenciaForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('portfolio:competencias')
+    return render(request, 'portfolio/form_generico.html', {'form': form, 'titulo': 'Nova Competência'})
+
+def competencia_edita_view(request, competencia_id):
+    competencia = get_object_or_404(Competencia, id=competencia_id)
+    form = CompetenciaForm(request.POST or None, instance=competencia)
+    if form.is_valid():
+        form.save()
+        return redirect('portfolio:competencias')
+    return render(request, 'portfolio/form_generico.html', {'form': form, 'titulo': 'Editar Competência'})
+
+def competencia_apaga_view(request, competencia_id):
+    competencia = get_object_or_404(Competencia, id=competencia_id)
+    competencia.delete()
+    return redirect('portfolio:competencias')
+
+
+# --- CRUD Formações ---
+def formacao_novo_view(request):
+    form = FormacaoForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('portfolio:formacoes')
+    return render(request, 'portfolio/form_generico.html', {'form': form, 'titulo': 'Nova Formação'})
+
+def formacao_edita_view(request, formacao_id):
+    formacao = get_object_or_404(Formacao, id=formacao_id)
+    form = FormacaoForm(request.POST or None, instance=formacao)
+    if form.is_valid():
+        form.save()
+        return redirect('portfolio:formacoes')
+    return render(request, 'portfolio/form_generico.html', {'form': form, 'titulo': 'Editar Formação'})
+
+def formacao_apaga_view(request, formacao_id):
+    formacao = get_object_or_404(Formacao, id=formacao_id)
+    formacao.delete()
+    return redirect('portfolio:formacoes')

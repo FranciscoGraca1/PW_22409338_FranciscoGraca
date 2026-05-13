@@ -3,25 +3,92 @@
 <h2 class="mb-4 border-bottom pb-2">Making Of - Documentação do Projeto</h2>
 <div class="row">
     <div class="col-lg-8">
+
         <h3>1. Modelação de Dados</h3>
         <p>O processo de modelação começou no papel, onde foram definidas as entidades centrais (Pessoa, Projeto, Tecnologia, UC). A relação Many-to-Many entre Projetos e Tecnologias foi crucial para permitir a reutilização de tags de stack tecnológica.</p>
-        
-        <!-- Exemplo de como mostrar as fotos do seu caderno -->
+
         <div class="card mb-4 bg-light p-3 text-center">
             <img src="/media/makingof/caderno_der.jpg" class="img-fluid rounded mb-2" alt="Foto do Caderno">
             <span class="text-muted small">Figura 1: Esboço inicial do Diagrama Entidade-Relação.</span>
         </div>
 
-        <h3>2. Dificuldades Técnicas</h3>
+        <h3>2. Implementação de Formulários CRUD</h3>
+        <p>
+            Nesta fase foram implementadas operações CRUD (Create, Read, Update, Delete) para as entidades
+            <strong>Projeto</strong>, <strong>Tecnologia</strong>, <strong>Competência</strong> e <strong>Formação</strong>.
+            O Django facilita muito este processo através das <code>ModelForm</code>, que geram automaticamente
+            os campos do formulário a partir do modelo.
+        </p>
+        <p>
+            Para cada entidade foram criadas três views: uma para criar, uma para editar (que recebe o <code>id</code>
+            do objeto via URL) e uma para apagar. Todas partilham o mesmo template <code>form_generico.html</code>,
+            recebendo apenas o título como contexto diferente — o que demonstra bem a reutilização de código no Django.
+        </p>
+
+        <h4>Dificuldades encontradas</h4>
+        <ul>
+            <li>
+                <strong>Nomes de URL inconsistentes:</strong> Os templates usavam nomes como <code>novo_projeto</code>
+                mas o <code>urls.py</code> definia <code>projeto_novo</code>. Isto causava erros <code>NoReverseMatch</code>
+                em tempo de execução. A solução foi uniformizar todos os nomes no <code>urls.py</code>.
+            </li>
+            <li>
+                <strong>Template inexistente (<code>layout.html</code>):</strong> Alguns templates faziam
+                <code>{% verbatim %}{% extends 'portfolio/layout.html' %}{% endverbatim %}</code>
+                quando o ficheiro base se chama <code>base.html</code>. Resultou no erro
+                <code>TemplateDoesNotExist</code> nas páginas de Projetos e Tecnologias.
+            </li>
+            <li>
+                <strong>Rotas em falta:</strong> As páginas <code>/portfolio/competencias/</code> e
+                <code>/portfolio/formacoes/</code> não tinham rotas definidas no <code>urls.py</code>,
+                resultando em erro 404.
+            </li>
+            <li>
+                <strong>Templates vazios:</strong> Os ficheiros <code>competencias.html</code> e
+                <code>formacoes.html</code> existiam na pasta mas estavam completamente vazios.
+            </li>
+        </ul>
+
+        <h4>O que aprendi e considerei importante</h4>
+        <ul>
+            <li>
+                O Django é muito vantajoso na construção de aplicações web porque o padrão MTV
+                (Model-Template-View) separa bem as responsabilidades, tornando o código mais organizado e fácil de manter.
+            </li>
+            <li>
+                As <code>ModelForm</code> poupam imenso tempo — não é necessário escrever HTML de formulário
+                manualmente, o Django gera os campos automaticamente com validação incluída.
+            </li>
+            <li>
+                O sistema de <code>namespaces</code> nos URLs (ex: <code>portfolio:novo_projeto</code>)
+                é muito útil para evitar conflitos entre apps e manter os links independentes dos URLs reais.
+            </li>
+            <li>
+                Os botões de editar/apagar só aparecem para utilizadores autenticados com o grupo
+                <code>gestor-portfolio</code>, o que é uma boa prática de segurança mesmo sem middleware adicional.
+            </li>
+        </ul>
+
+        <h3>3. Dificuldades Técnicas Gerais</h3>
         <ul>
             <li><strong>Importação de Dados:</strong> O mapeamento dos campos da API da Lusófona para os campos do modelo Django exigiu ajustes no script para tratar caracteres especiais.</li>
             <li><strong>Roteamento:</strong> Corrigido o erro de 404 ao aceder ao URL sem a barra final através da configuração correta no <code>urls.py</code> do projeto.</li>
         </ul>
+
     </div>
     <div class="col-lg-4">
-        <div class="p-3 bg-light rounded border">
+        <div class="p-3 bg-light rounded border mb-3">
             <h5>Metodologia</h5>
-            <p class="small text-muted">Implementação incremental: primeiro os modelos, seguidos do admin para teste de dados, e finalmente as views e templates.</p>
+            <p class="small text-muted">Implementação incremental: primeiro os modelos, seguidos do admin para teste de dados, e finalmente as views, formulários e templates.</p>
+        </div>
+        <div class="p-3 bg-light rounded border">
+            <h5>Resumo do CRUD implementado</h5>
+            <ul class="small text-muted mb-0">
+                <li>✅ Projetos (criar, editar, apagar)</li>
+                <li>✅ Tecnologias (criar, editar, apagar)</li>
+                <li>✅ Competências (criar, editar, apagar)</li>
+                <li>✅ Formações (criar, editar, apagar)</li>
+            </ul>
         </div>
     </div>
 </div>
