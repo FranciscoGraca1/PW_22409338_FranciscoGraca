@@ -1,0 +1,48 @@
+{% extends 'portfolio/base.html' %}
+{% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-md-5">
+
+    <!-- Login por senha -->
+    <div class="card shadow mb-4">
+      <div class="card-body p-4">
+        <h3 class="mb-4 text-center">Entrar</h3>
+        <form method="post" action="{% url 'accounts:login' %}">
+          {% csrf_token %}
+          {% for field in form %}
+            <div class="mb-3">
+              <label class="form-label fw-semibold">{{ field.label }}</label>
+              <input type="{{ field.field.widget.input_type }}"
+                     name="{{ field.html_name }}"
+                     class="form-control {% if field.errors %}is-invalid{% endif %}">
+              {% for error in field.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+              {% endfor %}
+            </div>
+          {% endfor %}
+          <button type="submit" class="btn btn-primary w-100">Entrar</button>
+        </form>
+        <p class="text-center mt-3 small">
+          Não tens conta? <a href="{% url 'accounts:registo' %}">Regista-te</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Magic Link -->
+    <div class="card shadow border-0 bg-light">
+      <div class="card-body p-4">
+        <h5 class="text-center mb-3">🔗 Entrar com link mágico</h5>
+        <p class="small text-muted text-center">Recebe um link por email, sem precisar de password.</p>
+        <form method="post" action="{% url 'accounts:magic_link_request' %}">
+          {% csrf_token %}
+          <div class="mb-3">
+            {{ magic_form.email }}
+          </div>
+          <button type="submit" class="btn btn-outline-primary w-100">Enviar link</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'portfolio/base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Artigos</h1>
+        {% if user.is_authenticated and user.groups.all|length > 0 %}
+            {% for g in user.groups.all %}
+                {% if g.name == 'autores' %}
+                    <a href="{% url 'artigos:novo' %}" class="btn btn-primary">+ Novo Artigo</a>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="row">
+        {% for artigo in artigos %}
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                {% if artigo.fotografia %}
+                    <img src="{{ artigo.fotografia.url }}" class="card-img-top" style="max-height:200px;object-fit:cover;" alt="{{ artigo.titulo }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">{{ artigo.titulo }}</h5>
+                    <p class="text-muted small">por <strong>{{ artigo.autor.username }}</strong> · {{ artigo.data_criacao|date:"d M Y" }}</p>
+                    <p class="card-text">{{ artigo.texto|truncatechars:150 }}</p>
+                </div>
+                <div class="card-footer d-flex justify-content-between align-items-center">
+                    <a href="{% url 'artigos:detalhe' artigo.id %}" class="btn btn-sm btn-outline-primary">Ler mais</a>
+                    <span class="text-muted small">❤️ {{ artigo.likes.count }} · 💬 {{ artigo.comentarios.count }}</span>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+            <p class="text-muted text-center">Ainda não há artigos publicados.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

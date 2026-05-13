@@ -1,0 +1,14 @@
+{% extends 'portfolio/base.html' %}
+{% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-md-6 text-center">
+    <div class="card shadow p-5">
+      <h2>📧 Link enviado!</h2>
+      <p class="mt-3">Enviámos um link de acesso para <strong>{{ email }}</strong>.</p>
+      <p class="text-muted small">O link é válido durante 15 minutos. Verifica também a pasta de spam.</p>
+      <p class="text-muted small"><em>(Em modo de desenvolvimento o link aparece no terminal do servidor.)</em></p>
+      <a href="{% url 'portfolio:home' %}" class="btn btn-outline-primary mt-3">Voltar ao início</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
