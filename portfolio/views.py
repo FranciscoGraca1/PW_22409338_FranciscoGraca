@@ -1,15 +1,28 @@
+import requests
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
 
-# ── Listagens ─────────────────────────────────────────────────────────────────
+# ── Páginas principais ────────────────────────────────────────────────────────
+
+def landing_view(request):
+    return render(request, 'portfolio/landing.html')
 
 def home_page_view(request):
     return render(request, 'portfolio/home.html')
 
 def sobre_view(request):
-    return render(request, 'portfolio/home.html')
+    apps = [
+        {'nome': 'portfolio', 'descricao': 'Percurso académico, projetos, tecnologias, competências e formações.'},
+        {'nome': 'artigos', 'descricao': 'Publicação de artigos técnicos com comentários e avaliações.'},
+        {'nome': 'accounts', 'descricao': 'Autenticação por senha, magic link e OAuth (Google).'},
+        {'nome': 'boxe', 'descricao': 'API RESTful de boxe com lutadores, combates e títulos. Protegida por API Key.'},
+    ]
+    return render(request, 'portfolio/sobre.html', {'apps': apps})
+
+def videos_view(request):
+    return render(request, 'portfolio/videos.html')
 
 def licenciatura_view(request):
     context = {'licenciatura': Licenciatura.objects.first()}
@@ -46,6 +59,26 @@ def formacoes_view(request):
 def makingof_view(request):
     return render(request, 'portfolio/makingof.html')
 
+def boxe_view(request):
+    categorias = [
+        'heavyweight', 'cruiserweight', 'light-heavyweight',
+        'super-middleweight', 'middleweight', 'welterweight',
+        'lightweight', 'featherweight', 'bantamweight', 'flyweight'
+    ]
+    categoria = request.GET.get('categoria', 'heavyweight')
+    try:
+        response = requests.get(
+            f'https://openboxing.org/api/{categoria}/bouts.json',
+            verify=False
+        )
+        combates = response.json() if response.status_code == 200 else []
+    except:
+        combates = []
+    return render(request, 'portfolio/boxe.html', {
+        'combates': combates,
+        'categoria': categoria,
+        'categorias': categorias
+    })
 
 # ── CRUD Projetos ─────────────────────────────────────────────────────────────
 
@@ -71,7 +104,6 @@ def projeto_apaga_view(request, projeto_id):
     get_object_or_404(Projeto, id=projeto_id).delete()
     return redirect('portfolio:projetos')
 
-
 # ── CRUD Tecnologias ──────────────────────────────────────────────────────────
 
 @login_required
@@ -96,7 +128,6 @@ def tecnologia_apaga_view(request, tecnologia_id):
     get_object_or_404(Tecnologia, id=tecnologia_id).delete()
     return redirect('portfolio:tecnologias')
 
-
 # ── CRUD Competências ─────────────────────────────────────────────────────────
 
 @login_required
@@ -120,7 +151,6 @@ def competencia_edita_view(request, competencia_id):
 def competencia_apaga_view(request, competencia_id):
     get_object_or_404(Competencia, id=competencia_id).delete()
     return redirect('portfolio:competencias')
-
 
 # ── CRUD Formações ────────────────────────────────────────────────────────────
 

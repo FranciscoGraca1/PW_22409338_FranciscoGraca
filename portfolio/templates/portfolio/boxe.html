@@ -1,0 +1,87 @@
+{% extends 'portfolio/base.html' %}
+{% block title %}Boxe | API Open Boxing{% endblock %}
+{% block content %}
+<div class="container mt-2">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="fw-bold mb-1">🥊 Combates de Boxe</h1>
+            <p class="text-muted mb-0">Dados em tempo real via <a href="https://openboxing.org" target="_blank">Open Boxing API</a></p>
+        </div>
+    </div>
+
+    <!-- Filtro por categoria -->
+    <form method="get" class="mb-4">
+        <div class="d-flex gap-2 flex-wrap">
+            {% for cat in categorias %}
+                <a href="?categoria={{ cat }}"
+                   class="btn btn-sm {% if cat == categoria %}btn-dark{% else %}btn-outline-secondary{% endif %}">
+                    {{ cat|title }}
+                </a>
+            {% endfor %}
+        </div>
+    </form>
+
+    <!-- Listagem de combates -->
+    <div class="row g-3">
+        {% for combate in combates %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+
+                    <!-- Data e status -->
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted small">📅 {{ combate.date }}</span>
+                        <span class="badge {% if combate.status == 'FINISHED' %}bg-success{% else %}bg-warning text-dark{% endif %}">
+                            {{ combate.status }}
+                        </span>
+                    </div>
+
+                    <!-- Lutadores -->
+                    <h6 class="fw-bold text-center mb-1">
+                        {{ combate.boxers.boxerA.name.short }}
+                        <span class="text-muted mx-1">vs</span>
+                        {{ combate.boxers.boxerB.name.short }}
+                    </h6>
+
+                    <!-- Resultado -->
+                    {% if combate.result %}
+                    <div class="text-center mt-2">
+                        {% if combate.result.winner == "BOXER A" %}
+                            <span class="fw-bold text-success">🏆 {{ combate.boxers.boxerA.name.short }}</span>
+                        {% elif combate.result.winner == "BOXER B" %}
+                            <span class="fw-bold text-success">🏆 {{ combate.boxers.boxerB.name.short }}</span>
+                        {% else %}
+                            <span class="text-muted">Empate</span>
+                        {% endif %}
+                        <span class="badge bg-secondary ms-2">{{ combate.result.methodOfVictory }}</span>
+                        <span class="text-muted small ms-1">{{ combate.result.totalRounds }} rounds</span>
+                    </div>
+                    {% endif %}
+
+                    <!-- Categoria -->
+                    <p class="text-muted small text-center mt-2 mb-0">
+                        {{ combate.weight.class }}
+                    </p>
+
+                    <!-- Títulos em jogo -->
+                    {% if combate.titles %}
+                    <div class="mt-2 d-flex flex-wrap gap-1 justify-content-center">
+                        {% for titulo in combate.titles %}
+                            <span class="badge bg-warning text-dark">{{ titulo.org.name.abbreviation }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center text-muted py-5">
+            <p>Não foi possível carregar os combates. Tenta outra categoria.</p>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

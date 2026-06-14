@@ -1,0 +1,38 @@
+{% extends 'portfolio/base.html' %}
+{% block title %}Videotutoriais{% endblock %}
+{% block content %}
+<div class="container" style="max-width:900px">
+    <h1 class="fw-bold mb-1">📹 Videotutoriais</h1>
+    <p class="text-muted mb-5">Tutoriais criados ao longo do desenvolvimento do projeto.</p>
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body p-4">
+            <h4 class="fw-bold mb-1">1. Desenvolvimento de Aplicação Django</h4>
+            <p class="text-muted small mb-3">Tutorial sobre como construir uma aplicação web com Django — modelos, views, templates e URLs.</p>
+            <div class="ratio ratio-16x9">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Tutorial Django" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body p-4">
+            <h4 class="fw-bold mb-1">2. Arquitetura do Sistema e Pipeline CI/CD</h4>
+            <p class="text-muted small mb-3">Explicação da arquitetura completa: Neon, Cloudinary, Docker e GitHub Actions.</p>
+            <div class="ratio ratio-16x9">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="CI/CD Pipeline" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body p-4">
+            <h4 class="fw-bold mb-1">3. Developer em Ação</h4>
+            <p class="text-muted small mb-3">Como criar um Codespace, instalar dependências e fazer deploy em produção.</p>
+            <div class="ratio ratio-16x9">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Developer em Ação" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-info">
+        💡 Substitui os <code>src</code> pelos links reais dos teus vídeos no YouTube no formato <code>https://www.youtube.com/embed/ID</code>.
+    </div>
+</div>
+{% endblock %}

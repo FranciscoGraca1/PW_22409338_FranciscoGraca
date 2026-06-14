@@ -1,0 +1,62 @@
+{% extends 'portfolio/base.html' %}
+{% block title %}Sobre o Website{% endblock %}
+{% block content %}
+<div class="container" style="max-width:900px">
+    <h1 class="fw-bold mb-1">Sobre este Website</h1>
+    <p class="text-muted mb-5">Uma aplicação web Django com arquitetura profissional em produção.</p>
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm p-3">
+                <h5 class="fw-bold">🐍 Backend</h5>
+                <ul class="list-unstyled text-muted small mt-2">
+                    <li>Python 3.12 + Django 5.2</li>
+                    <li>Django Ninja (API RESTful)</li>
+                    <li>Gunicorn (WSGI)</li>
+                    <li>PostgreSQL (Neon)</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm p-3">
+                <h5 class="fw-bold">🎨 Frontend</h5>
+                <ul class="list-unstyled text-muted small mt-2">
+                    <li>Bootstrap 5.3</li>
+                    <li>Django Templates</li>
+                    <li>Whitenoise (static)</li>
+                    <li>Cloudinary (media)</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm p-3">
+                <h5 class="fw-bold">☁️ Infraestrutura</h5>
+                <ul class="list-unstyled text-muted small mt-2">
+                    <li>Docker (container)</li>
+                    <li>GitHub Actions (CI/CD)</li>
+                    <li>Servidor DEISI</li>
+                    <li>Neon + Cloudinary</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <h3 class="fw-bold mb-3">🥊 API RESTful de Boxe</h3>
+    <p class="text-muted mb-4">A aplicação inclui uma API RESTful construída com <strong>Django Ninja</strong>, protegida por <strong>API Key</strong>. Permite gerir lutadores, combates e títulos de boxe com operações CRUD completas.</p>
+    <div class="d-flex gap-2 flex-wrap mb-5">
+        <a href="/boxe/api/docs" target="_blank" class="btn btn-dark">Documentação Swagger ↗</a>
+        <a href="{% url 'portfolio:boxe' %}" class="btn btn-outline-dark">Combates Open Boxing</a>
+    </div>
+    <h3 class="fw-bold mb-3">🔄 Pipeline CI/CD</h3>
+    <ol class="text-muted mb-5">
+        <li class="mb-2"><strong>git push</strong> → código sobe para o repositório GitHub na organização <code>pw-2425-alunos</code></li>
+        <li class="mb-2"><strong>GitHub Actions</strong> → workflow <code>build-push-deploy.yml</code> dispara automaticamente</li>
+        <li class="mb-2"><strong>Build Docker</strong> → imagem construída com o <code>Dockerfile</code></li>
+        <li class="mb-2"><strong>Deploy</strong> → container enviado para o servidor DEISI</li>
+        <li class="mb-2"><strong>Live</strong> → aplicação disponível em produção</li>
+    </ol>
+    <h3 class="fw-bold mb-3">🔗 Links</h3>
+    <div class="d-flex gap-3 flex-wrap">
+        <a href="https://github.com/pw-2425-alunos/franciscogracaa22409338" target="_blank" class="btn btn-dark">GitHub do Projeto</a>
+        <a href="https://www.linkedin.com/in/francisco-gra%C3%A7a-08453b220/" target="_blank" class="btn btn-outline-primary">LinkedIn</a>
+    </div>
+</div>
+{% endblock %}
